@@ -1,0 +1,146 @@
+---
+title: "Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Topic 1
+
+### Exercise 
+
+Write the R code required to add two plus two:
+
+```{r two-plus-two, exercise=TRUE}
+
+```
+
+### Functions
+
+Now write a function that adds any two numbers and then call it:
+
+```{r add-function, exercise=TRUE, exercise.lines = 5}
+add <- function() {
+  
+}
+```
+
+## Viewing Dataset Dimensions
+
+`dim()`, `nrow()`, `ncol()` are all useful for seeing the size of a dataset.
+
+```{r quiz-dim}
+quiz(
+  question("How many rows are in the mtcars dataset?",
+    answer("11"),
+    answer("32", correct = TRUE),
+    answer("472")
+  ),
+  question("How many columns are in the mtcars dataset?",
+    answer("11", correct = TRUE),
+    answer("32"),
+    answer("472")
+  ),
+  question("What does `dim(mtcars)` return?",
+    answer("number of of cells in dataset"),
+    answer("number of columns, number of rows"),
+    answer("number of rows, number of columns", correct = TRUE)
+  )
+  )
+```
+
+## Viewing Rows
+
+
+Use a function to view the *first* 5 rows of `mtcars`
+
+```{r print-limit-head, exercise=TRUE, exercise.eval=TRUE}
+mtcars
+```
+
+```{r print-limit-head-hint}
+head(mtcars)
+```
+
+Use a function to view the *last* 5 rows of `mtcars`
+
+```{r print-limit-tail, exercise=TRUE, exercise.eval=TRUE}
+mtcars
+```
+
+```{r print-limit-tail-hint}
+tail(mtcars)
+```
+
+Modify the following code to view rows 6 - 9:
+
+```{r print-limit, exercise=TRUE, exercise.eval=TRUE}
+mtcars
+```
+
+```{r print-limit-hint}
+mtcars[6:9,]
+```
+
+
+## Viewing Full Datasets
+
+
+```{r quiz-full-dataset}
+quiz(
+  question("What should you type into the console to look at the mtcars dataset in its own tab?",
+    answer("mtcars"),
+    answer("View(mtcars)", correct = TRUE),
+    answer("head(mtcars)")
+  ),
+  question("What should you type into the console to look at the full mtcars dataset in the console itself?",
+    answer("mtcars", correct = TRUE),
+    answer("View(mtcars)"),
+    answer("head(mtcars)")
+  ),
+  question("What should you type into the console to quickly look at the range of values for each column in mtcars?",
+    answer("mtcars[,1:3]"),
+    answer("range(mtcars)"),
+    answer("summary(mtcars)", correct = TRUE)
+  )
+)
+```
+
+
+
+## Viewing Columns
+
+Return the names of all columns in `mtcars`
+
+```{r print-names, exercise=TRUE, exercise.eval=TRUE}
+mtcars
+```
+
+```{r print-names-hint}
+names(mtcars)
+```
+
+Return the *first three* columns in `mtcars`
+
+```{r print-limit-cols, exercise=TRUE, exercise.eval=TRUE}
+mtcars
+```
+
+```{r print-limit-cols-hint}
+mtcars[,1:3]
+```
+
+Return just the *gear* column from `mtcars`
+
+```{r print-gear, exercise=TRUE, exercise.eval=TRUE}
+mtcars
+```
+
+```{r print-gear-hint}
+mtcars$gear
+```
