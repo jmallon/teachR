@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
-## Topic 1
+## Fundamentals
 
 ### Exercise 
 
@@ -20,7 +20,16 @@ Write the R code required to add two plus two:
 
 ```
 
+
 ### Functions
+
+Here is a generic function.
+
+```{r generic-function, exercise=FALSE, echo = TRUE}
+myFunction <- function(x,y){ print(paste(x,y)) }
+
+myFunction('abc',123)
+```
 
 Now write a function that adds any two numbers and then call it:
 
@@ -31,6 +40,11 @@ add <- function() {
 ```
 
 ## Viewing Dataset Dimensions
+
+Use this space to run code to answer the questions below:
+```{r open1, exercise = T, exercise.lines = 3}
+mtcars
+```
 
 `dim()`, `nrow()`, `ncol()` are all useful for seeing the size of a dataset.
 
