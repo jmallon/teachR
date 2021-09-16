@@ -1,0 +1,185 @@
+---
+title: "Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+
+## Refresher: Syntax {data-progressive=TRUE}
+
+### Quiz 
+
+**We can plot natively in R with the plot() function**
+
+*Here is a space to test your code*
+```{r base, exercise=TRUE}
+
+```
+
+```{r quiz}
+quiz(
+  question("Which line is not equivalent to the others?",
+    answer("plot(mtcars$wt,mtcars$mpg)"),
+    answer("plot(mtcars[,wt],mtcars[,mpg])", correct = TRUE),
+    answer("with(mtcars,plot(wt,mpg))"),
+    answer("plot(mtcars[,6],mtcars[,1])")
+  )
+)
+
+```
+
+### Explanation
+
+A table in R is made up of rows and columns. 
+The basic structure is: `myTable[row,col]`
+
+When we are working with a dataset, we might want to avoid calling the name of the table repeatedly.
+Using `with(myTable, ... )` we only have to call the name of the table once.
+
+Alternatively, we might want to avoid typing the name of the column. 
+Here you could use `plot(myTable[,xcolumn],myTable[,ycolumn])`. Do not use quotes for numbers. 
+
+Do use quotes for strings. Hence why `plot(mtcars[,wt],mtcars[,mpg])` was wrong.
+
+## ggplot2 - intro
+
+### Use ggplot to make better looking plots
+
+*To use ggplot, we need to call the library first. *
+
+```{r basic-plot, exercise=FALSE, echo = TRUE}
+library(ggplot2)
+
+ggplot(mtcars, aes(wt, mpg)) + 
+  geom_point()+
+   geom_smooth(method = 'lm')
+```
+
+(Note how here you do not use quotes around the variables. It is package specific!)
+
+```{r colorcont, exercise=TRUE}
+ggplot(mtcars, aes(, , col = )) + 
+  geom_point()+
+   geom_smooth(method = 'lm')
+```
+
+Now add the 'cyl' column as the color. Tip: `as.factor()` turns a numeric column into a categorical one
+
+```{r color1, exercise=TRUE}
+ggplot(mtcars, aes(, , col = as.factor())) + 
+  geom_point()+
+   geom_smooth(method = 'lm')
+```
+
+```{r color2, exercise=TRUE}
+ggplot(mtcars, aes(, )) + 
+  geom_point(aes(col = as.factor()))+
+   geom_smooth(method = 'lm')
+```
+
+```{r color3, exercise=TRUE}
+ggplot(mtcars, aes(, )) + 
+  geom_point()+
+   geom_smooth(aes(col = as.factor()),method = 'lm')
+```
+
+*What are the differences between the plots? Why might you choose to use one over the other?*
+
+## ggplot2 - color aesthetics {data-progressive=TRUE}
+
+### Variable - vs User-defined colors
+
+*In this example, `col` is being called outside of the `aes()` part of the function. Instead of coloring by `cyl`, just choose the name of a color*
+
+```{r color4, exercise=TRUE}
+ggplot(mtcars, aes(, ), col = ) + 
+  geom_point()+
+   geom_smooth(method = 'lm')
+```
+
+```{r color4-hint}
+# In R, anything that is not a variable needs quotes!
+```
+
+## ggplot2 - graph types {data-progressive=TRUE}
+
+### Using different graph types
+
+*Preview the `mpg` dataset to look at all of the column options*
+
+```{r data, exercise=TRUE}
+
+```
+
+*So any of the continuous columns could be used to look at the variation of that variable. The options for a single continuous variable are geom_area(), geom_density(), geom_dotplot(), geom_histogram() or geom_freqpoly(). Try each one*
+
+```{r single-cont-plots, exercise=TRUE}
+ggplot(mpg, aes(hwy))+geom_histogram()
+
+```
+
+*The `class` column is a good option to use for a boxplot, col, dotplot, or violin plot. As above, the syntax here is `+ geom_<plottype>()`. Try each one*
+
+```{r discrete-cont-plots, exercise=TRUE}
+
+```
+
+## ggplot2 - aesthetic options 01 {data-progressive=TRUE}
+
+### More aesthetics
+
+*Compare the use of `col` versus `fill` *
+```{r color-aes, exercise = TRUE}
+ggplot(mpg, aes(hwy))+geom_histogram( col = 'red')
+
+```
+
+*We can also specify the look of lines. Values options are 0 - 6*
+```{r line-aes, exercise = TRUE}
+ggplot(mpg, aes(cty,hwy))+ geom_smooth(linetype = 2)
+
+```
+
+*There are a lot of options for a scatterplot. The default shape is 19, options are 0 - 25*
+```{r pts0-aes, exercise = TRUE}
+ggplot(mpg, aes(cty,hwy))+ geom_point(shape = 19)
+
+```
+
+*We can use both col and fill at the same time on some of the point shapes. Experiment with shapes 19 and 21. What is the difference?*
+```{r pts1-aes, exercise = TRUE}
+ggplot(mpg, aes(cty,hwy))+ geom_point(shape = 21, size = 3)
+ggplot(mpg, aes(cty,hwy))+ geom_point(shape = 19, size = 3)
+```
+
+## ggplot2 - aesthetic options 02 {data-progressive=TRUE}
+
+### Combining aesthetics
+
+*All of these options (shape, size, linetype, col, fill) can be used within or outside of an `aes()`. Remember within `aes()` you provide a variable name (let's use `fl`, which is fueltype)*
+```{r pts2-aes, exercise = TRUE}
+ggplot(mpg, aes(cty,hwy, size = fl))+ geom_point()
+ggplot(mpg, aes(cty,hwy))+ geom_point(aes(size = fl))
+```
+
+*In the last example, placing `aes` in either the `ggplot()` or `geom_point()` function will produce the same graph. Let's add `geom_smooth()` back in to understand where these differ*
+```{r pts3-aes, exercise = TRUE}
+ggplot(mpg, aes(cty,hwy, size = fl))+ geom_point() + geom_smooth()
+ggplot(mpg, aes(cty,hwy))+ geom_point(aes(size = fl)) + geom_smooth()
+```
+
+*Now let's make a really cool graph! Using the options above, create the points and line to look exactly the way you want them to! I've added two more functions to make it more aesthetically pleasing*
+```{r pts4-aes, exercise = TRUE}
+ggplot(mpg, aes(cty,hwy, linetype = fl))+ 
+  geom_point() + 
+  geom_smooth(method = 'lm', se = FALSE) + 
+  theme_classic()+  # theme_bw() is another good option
+  labs(y = "Highway MPG",
+       x = "City MPG",
+       linetype = "Fuel Type")
+```
