@@ -8,4 +8,7 @@ Before you run the scripts, ensure you have all of these packages downloaded
 install.packages("learnr")
 install.packages("ggplot2")
 install.packages("tidyverse")
+install.packages("markdown")
+install.packages("shiny")
+install.packages("knitr")
 ```
